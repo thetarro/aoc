@@ -1,10 +1,10 @@
-from typing import List
+from typing import List, Tuple
 
 
-def solution() -> None:
-  filename: str = "input.txt"
+FILENAME: str = "input.txt"
 
-  lines: List[str] = [line for line in open(filename)]
+def first_solution() -> None:
+  lines: List[str] = [line for line in open(FILENAME)]
   max_calories: int = 0
   current_calories: List[int] = []
 
@@ -17,7 +17,21 @@ def solution() -> None:
     else:
       current_calories.append(int(line))
 
-  print("Solution 1: %d" % (max_calories))    
+  print("Solution 1: %d" % (max_calories)) 
+
+def second_solution() -> None:
+  lines: List[str] = [line for line in open(FILENAME)]
+  current_calories: List[int] = []
+  elf_calories: List[int] = []
+
+  for line in lines:
+    if line == '\n':
+      elf_calories.append(sum(current_calories))
+      current_calories = []
+    else:
+      current_calories.append(int(line))
+  print("Solution 2: %d" % (sum(sorted(elf_calories, reverse = True)[0:3]))) 
 
 if __name__ == "__main__":
-  solution()
+  first_solution()
+  second_solution()
