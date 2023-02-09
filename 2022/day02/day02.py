@@ -46,12 +46,12 @@ def get_playable(left: str, right: str) -> str:
 
 
 def get_value_score(value: str) -> int:
-    if value == "X":
-        return 1  # rock
-    if value == "Y":
-        return 2  # paper
-    if value == "Z":
-        return 3  # scissors
+    if value == ROCK:
+        return 1 
+    if value == PAPER:
+        return 2
+    if value == SCISSORS:
+        return 3 
     return 0
 
 
