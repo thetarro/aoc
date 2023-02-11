@@ -52,7 +52,7 @@ def first_solution(lines: Sequence[str]) -> int:
 def second_solution(lines: Sequence[str]) -> int:
     total_value: int = 0
     for triplet in grouper(lines, 3):
-        common_set = reduce((lambda x, y: x & y), (set(t) for t in triplet))
+        common_set : set[str]= reduce(lambda x, y: x & y, (set(t) for t in triplet))
         if len(common_set) != 1:
             print("Error on line %s".format(s))
             return -1
