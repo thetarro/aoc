@@ -9,9 +9,33 @@ class Move:
     to_index: int
 
 
-def parse_stack(line: str) -> Sequence[str]:
-    tokens = [line[4 * i : 4 * (i + 1)].strip() for i in range(int(len(line) / 4))]
+Stack = List[str]
+_STACK_SIZE: int = 9
+
+
+def print_stacks(stacks: dict[int, Stack]) -> None:
+    for i, stack in stacks.items():
+        print(f"{i}: {stack}")
+
+
+def parse_stack(line: str) -> Stack:
+    tokens = [line[4 * i : 4 * (i + 1)].strip() for i in range(int(len(line) / 4) + 1)]
     return [x[1] if len(x) == 3 else "" for x in tokens]
+
+
+def parse_stacks(lines: List[str]) -> dict[int, Stack]:
+    stacks: dict[int, Stack] = dict((i + 1, []) for i in range(_STACK_SIZE))
+    for line in lines:
+        if len(line) and line[0] == "[":
+            values = parse_stack(line)
+            for i, v in enumerate(values):
+                if len(v) > 0:
+                    stacks[i + 1].append(v)
+
+    for stack in stacks.values():
+        stack.reverse()
+
+    return stacks
 
 
 def parse_move(line: str) -> Move:
@@ -22,8 +46,36 @@ def parse_move(line: str) -> Move:
     return Move(value=value, from_index=from_index, to_index=to_index)
 
 
-def first_solution(lines: Sequence[str]) -> int:
-    return 0
+def parse_moves(lines: List[str]) -> List[Move]:
+    moves = []
+    for line in lines:
+        if len(line) and line[0] == "m":
+            moves.append(parse_move(line))
+    return moves
+
+
+def execute_move(from_stack: Stack, to_stack: Stack, n: int) -> None:
+    assert len(from_stack) >= n
+    for i in range(n):
+        value = from_stack.pop()
+        to_stack.append(value)
+
+
+def first_solution(lines: Sequence[str]) -> str:
+    moves = parse_moves(lines)
+    stacks = parse_stacks(lines)
+
+    print_stacks(stacks)
+    print("\n")
+    for move in moves:
+        execute_move(stacks[move.from_index], stacks[move.to_index], move.value)
+    print_stacks(stacks)
+
+    solution = ""
+    for i in range(1, _STACK_SIZE + 1):
+        solution += stacks[i][-1]
+
+    return solution
 
 
 def second_solution(lines: Sequence[str]) -> int:
@@ -31,32 +83,11 @@ def second_solution(lines: Sequence[str]) -> int:
 
 
 if __name__ == "__main__":
-    STACK_SIZE: int = 9
     lines: list[str] = [line.strip() for line in open("input.txt")]
-    stacks: dict[int, list[str]] = dict((i + 1, []) for i in range(STACK_SIZE))
-
-    for line in open("input.txt"):
-        if line[0] == "[":
-            values = parse_stack(line)
-            for i, v in enumerate(values):
-                if len(v) > 0:
-                    stacks[i + 1].append(v)
-
-        if len(line) == 0:
-            continue
-        if line[0] == "m":
-            move = parse_move(line)
-            # print(move)
-
-    for stack in stacks.values():
-        stack.reverse()
-
-    for i, stack in stacks.items():
-        print(f"{i}: {stack}")
 
     first_value = first_solution(lines)
-    print("Solution 1: %d" % (first_value))
-    assert first_value == 0
+    print("Solution 1: %s" % (first_value))
+    assert first_value == "BZLVHBWQF"
 
     second_value = second_solution(lines)
     print("Solution 2: %d" % (second_value))
