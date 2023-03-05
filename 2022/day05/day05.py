@@ -75,11 +75,7 @@ def first_solution(lines: Sequence[str]) -> str:
     for move in moves:
         execute_move(stacks[move.from_index], stacks[move.to_index], move.value)
 
-    solution = ""
-    for i in range(1, _STACK_SIZE + 1):
-        solution += stacks[i][-1]
-
-    return solution
+    return "".join([stacks[i][-1] for i in range(1, _STACK_SIZE + 1)])
 
 
 def second_solution(lines: Sequence[str]) -> int:
@@ -91,11 +87,7 @@ def second_solution(lines: Sequence[str]) -> int:
             stacks[move.from_index], stacks[move.to_index], move.value
         )
 
-    solution = ""
-    for i in range(1, _STACK_SIZE + 1):
-        solution += stacks[i][-1]
-
-    return solution
+    return "".join([stacks[i][-1] for i in range(1, _STACK_SIZE + 1)])
 
 
 if __name__ == "__main__":
