@@ -61,15 +61,19 @@ def execute_move(from_stack: Stack, to_stack: Stack, n: int) -> None:
         to_stack.append(value)
 
 
+def execute_move_together(from_stack: Stack, to_stack: Stack, n: int) -> None:
+    assert len(from_stack) >= n
+    values = from_stack[-n:]
+    del from_stack[-n:]
+    to_stack.extend(values)
+
+
 def first_solution(lines: Sequence[str]) -> str:
     moves = parse_moves(lines)
     stacks = parse_stacks(lines)
 
-    print_stacks(stacks)
-    print("\n")
     for move in moves:
         execute_move(stacks[move.from_index], stacks[move.to_index], move.value)
-    print_stacks(stacks)
 
     solution = ""
     for i in range(1, _STACK_SIZE + 1):
@@ -79,7 +83,19 @@ def first_solution(lines: Sequence[str]) -> str:
 
 
 def second_solution(lines: Sequence[str]) -> int:
-    return 0
+    moves = parse_moves(lines)
+    stacks = parse_stacks(lines)
+
+    for move in moves:
+        execute_move_together(
+            stacks[move.from_index], stacks[move.to_index], move.value
+        )
+
+    solution = ""
+    for i in range(1, _STACK_SIZE + 1):
+        solution += stacks[i][-1]
+
+    return solution
 
 
 if __name__ == "__main__":
@@ -90,5 +106,5 @@ if __name__ == "__main__":
     assert first_value == "BZLVHBWQF"
 
     second_value = second_solution(lines)
-    print("Solution 2: %d" % (second_value))
-    assert second_value == 0
+    print("Solution 2: %s" % (second_value))
+    assert second_value == "TDGJQTZSL"
