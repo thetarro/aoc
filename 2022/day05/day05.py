@@ -94,9 +94,9 @@ if __name__ == "__main__":
     lines: list[str] = [line.strip() for line in open("input.txt")]
 
     first_value = first_solution(lines)
-    print("Solution 1: %s" % (first_value))
+    print(f"Solution 1: {first_value}")
     assert first_value == "BZLVHBWQF"
 
     second_value = second_solution(lines)
-    print("Solution 2: %s" % (second_value))
+    print(f"Solution 2: {second_value}")
     assert second_value == "TDGJQTZSL"
