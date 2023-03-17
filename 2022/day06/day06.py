@@ -1,24 +1,26 @@
 from typing import Sequence
 
-_PATTERN_LENGTH: int = 4
-
 
 def has_unique_chars(line: str) -> bool:
     return len(set(x for x in line)) == len(line)
 
 
-def first_solution(line: str) -> int:
-    index = _PATTERN_LENGTH
+def check(line: str, pattern_length: int) -> int:
+    index = pattern_length
     for index in range(len(line) + 1):
-        if index < _PATTERN_LENGTH:
+        if index < pattern_length:
             continue
-        if has_unique_chars(line[index - _PATTERN_LENGTH : index]):
+        if has_unique_chars(line[index - pattern_length : index]):
             return index
     return 0
 
 
+def first_solution(line: str) -> int:
+    return check(line, 4)
+
+
 def second_solution(line: str) -> int:
-    return 0
+    return check(line, 14)
 
 
 if __name__ == "__main__":
@@ -30,9 +32,10 @@ if __name__ == "__main__":
     assert has_unique_chars("a") == True
     assert has_unique_chars("aa") == False
 
-    assert first_solution("abcd") == 4
-    assert first_solution("abcde") == 4
-    assert first_solution("aabcd") == 5
+    assert check("abcd", 4) == 4
+    assert check("abcde", 4) == 4
+    assert check("aabcd", 4) == 5
+    assert check("abcbcdbcde", 4) == 10
 
     first_value = first_solution(lines[0])
     print(f"Solution 1: {first_value}")
@@ -40,4 +43,4 @@ if __name__ == "__main__":
 
     second_value = second_solution(lines[0])
     print(f"Solution 2: {second_value}")
-    assert second_value == 0
+    assert second_value == 3037
