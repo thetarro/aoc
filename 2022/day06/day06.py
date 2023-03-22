@@ -5,7 +5,7 @@ def has_unique_chars(line: str) -> bool:
     return len(set(x for x in line)) == len(line)
 
 
-def check(line: str, pattern_length: int) -> int:
+def find_pattern_position(line: str, pattern_length: int) -> int:
     index = pattern_length
     for index in range(len(line) + 1):
         if index < pattern_length:
@@ -16,11 +16,11 @@ def check(line: str, pattern_length: int) -> int:
 
 
 def first_solution(line: str) -> int:
-    return check(line, 4)
+    return find_pattern_position(line, 4)
 
 
 def second_solution(line: str) -> int:
-    return check(line, 14)
+    return find_pattern_position(line, 14)
 
 
 if __name__ == "__main__":
@@ -32,10 +32,10 @@ if __name__ == "__main__":
     assert has_unique_chars("a") == True
     assert has_unique_chars("aa") == False
 
-    assert check("abcd", 4) == 4
-    assert check("abcde", 4) == 4
-    assert check("aabcd", 4) == 5
-    assert check("abcbcdbcde", 4) == 10
+    assert find_pattern_position("abcd", 4) == 4
+    assert find_pattern_position("abcde", 4) == 4
+    assert find_pattern_position("aabcd", 4) == 5
+    assert find_pattern_position("abcbcdbcde", 4) == 10
 
     first_value = first_solution(lines[0])
     print(f"Solution 1: {first_value}")
