@@ -78,7 +78,7 @@ def first_solution(lines: Sequence[str]) -> str:
     return "".join([stacks[i][-1] for i in range(1, _STACK_SIZE + 1)])
 
 
-def second_solution(lines: Sequence[str]) -> int:
+def second_solution(lines: Sequence[str]) -> str:
     moves = parse_moves(lines)
     stacks = parse_stacks(lines)
 
