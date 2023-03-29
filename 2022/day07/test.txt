@@ -1,0 +1,17 @@
+$ cd /
+$ ls
+10 f01.txt
+20 f02.txt
+30 f03.txt
+dir d1
+dir d2
+$ cd d1
+$ ls
+10 f11.txt
+20 f12.txt
+30 f13.txt
+$ cd ..
+$ cd d2
+$ ls
+10 f21.txt
+20 f22.txt
