@@ -43,7 +43,7 @@ def parse_tree(lines: Sequence[str]) -> Node:
                     )
                     if current_directory == None:
                         current_directory = root_directory = child_directory
-                    elif not dir_name in current_directory.children:
+                    elif dir_name not in current_directory.children:
                         current_directory.children[dir_name] = child_directory
                     current_directory = child_directory
 
@@ -60,7 +60,7 @@ def parse_tree(lines: Sequence[str]) -> Node:
                 children={},
                 size=int(filesize),
             )
-            if not filename in current_directory.children:
+            if filename not in current_directory.children:
                 current_directory.children[filename] = filenode
     return root_directory
 

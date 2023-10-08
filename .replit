@@ -1,0 +1,11 @@
+modules = ["python-3.10:v18-20230807-322e88b"]
+
+hidden = [".pythonlibs"]
+run = "cd 2022/day07 && python3 day07.py"
+
+[nix]
+channel = "stable-23_05"
+
+[deployment]
+run = ["sh", "-c", "python3 day07.py"]
+deploymentTarget = "cloudrun"
