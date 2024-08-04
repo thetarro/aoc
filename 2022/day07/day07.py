@@ -1,8 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Sequence
-from typing import TypeVar
-
+from typing import List, Sequence, Tuple, TypeVar
 
 
 class NodeType(Enum):
@@ -99,8 +97,32 @@ def first_solution(lines: Sequence[str]) -> int:
 
 
 def second_solution(lines: Sequence[str]) -> int:
-    return 0
+    total_space = 70_000_000
+    free_space_needed = 30_000_000
+    root = parse_tree(lines)
+    compute_node_size(root)
 
+    if root.size + free_space_needed < total_space:
+        # enough free space already, nothing to delete
+        return -1
+  
+    minumum_space_to_delete = root.size + free_space_needed - total_space 
+
+    queue: List[Node] = []
+    directory_sizes: List[int] = []
+    queue.append(root)
+    while len(queue) > 0:
+        current_node = queue.pop()
+        if current_node.type is NodeType.DIRECTORY:
+            directory_sizes.append(current_node.size)
+        for child in current_node.children.values():
+            queue.append(child)
+
+    directory_sizes.sort()
+    for size in directory_sizes:
+        if size > minumum_space_to_delete:
+            return size
+    return -1
 
 if __name__ == "__main__":
     lines: list[str] = [line.strip() for line in open("input.txt")]
@@ -111,4 +133,4 @@ if __name__ == "__main__":
 
     second_value = second_solution(lines)
     print(f"Solution 2: {second_value}")
-    assert second_value == 0
+    assert second_value == 578710
